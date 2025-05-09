@@ -39,7 +39,7 @@ runs:
         if [[ -n "${{ inputs.extra-env }}" ]]; then
           echo "${{ inputs.extra-env }}" | tr ',' '\n' | while IFS='=' read -r key value; do
             echo "Exporting $key"
-            echo "export $key='$value'" >> "$GITHUB_ENV"
+            echo "$key='$value'" >> "$GITHUB_ENV"
           done
         fi
         
