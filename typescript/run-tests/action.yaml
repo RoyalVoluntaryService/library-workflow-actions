@@ -19,10 +19,11 @@ runs:
   steps:
     - name: Install pnpm
       if: ${{ inputs.install-pnpm == true }}
-      uses: ./../install-pnpm
+      uses: RoyalVoluntaryService/library-workflow-actions/typescript/install-pnpm@main
       with:
         version: ${{ inputs.pnpm-version }}
         node-version: ${{ inputs.node-version }}
 
     - name: Run Test Suite
       run: pnpm test
+      shell: bash

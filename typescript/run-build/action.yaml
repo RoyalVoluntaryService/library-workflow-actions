@@ -17,13 +17,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: ./../install-pnpm
+    - uses: RoyalVoluntaryService/library-workflow-actions/typescript/install-pnpm@main
       with:
         version: ${{ inputs.pnpm-version }}
         node-version: ${{ inputs.node-version }}
         
     - if: ${{ inputs.run-tests == 'true' }}
-      uses: ./../run-tests
+      uses: RoyalVoluntaryService/library-workflow-actions/typescript/run-tests@main
       with:
         pnpm-version: ${{ inputs.pnpm-version }}
         node-version: ${{ inputs.node-version }}
