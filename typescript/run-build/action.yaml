@@ -1,0 +1,33 @@
+name: "Build project with optional tests"
+description: "Installs pnpm, optionally tests, then builds"
+inputs:
+  pnpm-version:
+    description: "Version of pnpm to install"
+    required: false
+    default: "8.15.4"
+  node-version:
+    description: "Node.js version to use"
+    required: false
+    default: "22"
+  run-tests:
+    description: "Whether to run tests before building"
+    required: false
+    default: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: ./../install-pnpm
+      with:
+        version: ${{ inputs.pnpm-version }}
+        node-version: ${{ inputs.node-version }}
+        
+    - if: ${{ inputs.run-tests == 'true' }}
+      uses: ./../run-tests
+      with:
+        pnpm-version: ${{ inputs.pnpm-version }}
+        node-version: ${{ inputs.node-version }}
+        install-pnpm: false
+        
+    - name: Build Project
+      run: pnpm build
