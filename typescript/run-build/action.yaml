@@ -13,6 +13,10 @@ inputs:
     description: "Whether to run tests before building"
     required: false
     default: true
+  extra-env:
+    description: "Comma-separated env assignments (e.g. VAR1=value1,VAR2=value2)"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -28,6 +32,16 @@ runs:
         pnpm-version: ${{ inputs.pnpm-version }}
         node-version: ${{ inputs.node-version }}
         install-pnpm: false
+
+    - name: Export Extra Env Vars
+      shell: bash
+      run: |
+        if [[ -n "${{ inputs.extra-env }}" ]]; then
+          echo "${{ inputs.extra-env }}" | tr ',' '\n' | while IFS='=' read -r key value; do
+            echo "Exporting $key"
+            echo "export $key='$value'" >> "$GITHUB_ENV"
+          done
+        fi
         
     - name: Build Project
       run: pnpm build
