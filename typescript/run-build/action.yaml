@@ -31,3 +31,4 @@ runs:
         
     - name: Build Project
       run: pnpm build
+      shell: bash
