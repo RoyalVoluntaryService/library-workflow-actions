@@ -44,5 +44,7 @@ runs:
         fi
         
     - name: Build Project
-      run: pnpm build
       shell: bash
+      run: |
+        env
+        pnpm build
